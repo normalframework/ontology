@@ -1,0 +1,41 @@
+map(include("point"))
+---
+point:
+  name: str()
+  short_name: str(required=False)
+  description: str(required=False)
+  haystack: include("haystack")
+  is_base: bool(required=False)
+  extends: str(required=False)
+  alarms: list(str(), map(str()), required=False)
+  history: list(str(), required=False)
+  points: list(str(), required=False)
+  google_ontology: str(required=False)
+  google_ontology_full: list(str(), map(list(include("google_ontology_full"))), required=False)
+  brick_ontology: str(required=False)
+  deprecated: bool(required=False)
+
+haystack:
+  type: list(str(), include("haystack_type_attr"))
+  identification: list(str(equals="id"), str(equals="dis"), include("identification"), required=False)
+  reference: list(str(), required=False)
+  reference_optional: list(str(), required=False)
+
+identification:
+  id: str(required=False)
+  dis: str(required=False)
+  navName: str(required=False)
+  kind: include("kind", required=False)
+  unit: str(required=False)
+  unit_type: enum("mass", "volume", "volumetric_flow", "mass_flow", "electric_potential", "pressure", "temperature", "temperature_differential", required=False)
+
+haystack_type_attr:
+  phase: enum("A", "B", "C", "AB", "BC", "CA", required=False)
+  unit_type: str(required=False)
+  stage: Integer(required=False)
+
+google_ontology_full:
+  kind: include("kind", required=False)
+  unit: str(required=False)
+
+kind: enum("Bool", "Number", "Str", "List", required=False)
