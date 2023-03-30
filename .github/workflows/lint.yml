@@ -17,9 +17,9 @@ jobs:
         with:
           python-version: 3.x
       - name: Install prereqs
-        working-directory: schema
+        working-directory: lint
         run: pip install -r requirements.txt
       - name: Run linter
-        working-directory: schema
+        working-directory: lint
         run: python lint.py
 
