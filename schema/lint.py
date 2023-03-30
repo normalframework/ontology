@@ -5,8 +5,15 @@ import yamale
 
 
 def validate_all(schema, pattern):
-    schema = yamale.make_schema(schema)
+    with open("includes.schema.yaml") as fp:
+        includes = fp.read()
+    with open(schema) as fp:
+        content = fp.read() + includes
+    schema = yamale.make_schema(content=content)
+    
     for defs in glob.glob(pattern):
+        if "/ui/" in defs:
+            continue
         print (defs)
         data = yamale.make_data(defs)
         yamale.validate(schema, data)
@@ -14,5 +21,6 @@ def validate_all(schema, pattern):
 if __name__ == '__main__':
     validate_all("./tags.schema.yaml", "../data/*tags*.yaml")
     validate_all("./point.schema.yaml", "../data/*/*point*.yaml")
+    validate_all("./equip.schema.yaml", "../data/*/equip.*.yaml")
 
     
